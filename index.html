@@ -134,7 +134,7 @@ body{font-family:'Inter',sans-serif;background:#f8fafc;color:#0f172a}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-var CONFIG={storeName:'Rocket Garage',storeSub:'Cat\u00E1logo de productos importados',whatsapp:'3212974609',currency:'$ ',currencySuffix:' COP',locale:'es-CO',trm:4150};
+var CONFIG={storeName:'Rocket Garage',storeSub:'Cat\u00E1logo de productos importados',whatsapp:'3212974609',currency:'$ ',currencySuffix:' COP',locale:'es-CO',trm:4150,trmMargin:1.05};
 var allProducts=[],currentCategory='todas';
 function psychPrice(n){var r=Math.floor(n/1000)*1000-100;return r<900?900:r;}
 
@@ -209,7 +209,7 @@ if(currentCategory!=='todas')filtered=filtered.filter(function(p){return p.categ
 if(q)filtered=filtered.filter(function(p){return p.name.toLowerCase().includes(q)||p.category.toLowerCase().includes(q)||(p.description&&p.description.toLowerCase().includes(q));});
 var grid=document.getElementById('productsGrid');
 if(filtered.length===0){grid.innerHTML='<div class="error-msg" style="grid-column:1/-1"><i class="bi bi-search"></i><h5>Sin resultados</h5><p class="mb-0">No encontramos productos con esa b\u00FAsqueda</p></div>';return;}
-var cur=CONFIG.currency,sfx=CONFIG.currencySuffix,trm=CONFIG.trm||1,fmt=CONFIG.locale?new Intl.NumberFormat(CONFIG.locale):null;
+var cur=CONFIG.currency,sfx=CONFIG.currencySuffix,trm=(CONFIG.trm||1)*CONFIG.trmMargin,fmt=CONFIG.locale?new Intl.NumberFormat(CONFIG.locale):null;
 var ff=function(n){return fmt?fmt.format(Math.round(n)):Math.round(n).toString();};
 grid.innerHTML=filtered.map(function(p){
 var sold=p.stock===0;
@@ -228,7 +228,7 @@ return '<div class="product-card'+(sold?' sold':'')+'" onclick="showProduct('+al
 
 function showProduct(idx){
 var p=allProducts[idx];if(!p)return;
-var cur=CONFIG.currency,sfx=CONFIG.currencySuffix,trm=CONFIG.trm||1,fmt=CONFIG.locale?new Intl.NumberFormat(CONFIG.locale):null;
+var cur=CONFIG.currency,sfx=CONFIG.currencySuffix,trm=(CONFIG.trm||1)*CONFIG.trmMargin,fmt=CONFIG.locale?new Intl.NumberFormat(CONFIG.locale):null;
 var ff=function(n){return fmt?fmt.format(Math.round(n)):Math.round(n).toString();};
 var pc=p.price*trm;
 var isSale=p.discount>0;
